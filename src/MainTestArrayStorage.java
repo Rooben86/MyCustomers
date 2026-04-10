@@ -11,6 +11,7 @@ public class MainTestArrayStorage {
         c2.setUuid("uuid2");
         Client c3 = new Client();
         c3.setUuid("uuid3");
+        Client c4 = new Client();
 
         ARRAY_STORAGE.save(c1);
         ARRAY_STORAGE.save(c2);
@@ -18,6 +19,7 @@ public class MainTestArrayStorage {
 
         System.out.println("Get c1: " + ARRAY_STORAGE.get(c1.getUuid()));
         System.out.println("Size: " + ARRAY_STORAGE.size());
+        ARRAY_STORAGE.update(c4);
 
         System.out.println("Get dummy: " + ARRAY_STORAGE.get("dummy"));
 

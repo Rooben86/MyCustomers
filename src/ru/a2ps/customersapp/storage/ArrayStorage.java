@@ -13,31 +13,45 @@ public class ArrayStorage {
         size = 0;
     }
 
+    public void update(Client c) {
+        int index = getIndex(c.getUuid());
+        if (index == -1) {
+            System.out.println("client " + c.getUuid() + "doesn't exist");
+        } else {
+            storage[index] = c;
+        }
+    }
+
     public void save(Client c) {
-        storage[size] = c;
-        size++;
+        if (getIndex(c.getUuid()) != -1) {
+            System.out.println("client " + c.getUuid() + " already exists");
+        } else if (size == storage.length - 1) {
+            System.out.println("Storage overflow");
+        } else {
+            storage[size] = c;
+            size++;
+        }
     }
 
     public Client get(String uuid) {
-        for (int i = 0; i < size; i++) {
-            if (storage[i].getUuid().equals(uuid)) {
-                return storage[i];
-            }
+        int index = getIndex(uuid);
+        if (index == -1) {
+            System.out.println("client " + uuid + " doesn't exist");
+            return null;
         }
-        System.out.println("no client with such uuid found");
-        return null;
+        return storage[index];
     }
 
+
     public void delete(String uuid) {
-        for (int i = 0; i < size; i++) {
-            if (storage[i].getUuid().equals(uuid)) {
-                storage[i] = storage[size - 1];
-                storage[size - 1] = null;
-                size--;
-                return;
-            }
+        int index = getIndex(uuid);
+        if (index == -1) {
+            System.out.println("client " + uuid + " doesn't exist");
+        } else {
+            storage[index] = storage[size - 1];
+            storage[size - 1] = null;
+            size--;
         }
-        System.out.println("no client with such uuid found");
     }
 
     public Client[] getAll() {
@@ -48,5 +62,14 @@ public class ArrayStorage {
 
     public int size() {
         return size;
+    }
+
+    private int getIndex(String uuid) {
+        for (int i = 0; i < size; i++) {
+            if (storage[i].getUuid().equals(uuid)) {
+                return i;
+            }
+        }
+        return -1;
     }
 }
