@@ -1,17 +1,21 @@
 import ru.a2ps.customersapp.model.Client;
-import ru.a2ps.customersapp.storage.ArrayStorage;
+import ru.a2ps.customersapp.storage.SortedArrayStorage;
+import ru.a2ps.customersapp.storage.Storage;
+
+import java.util.Arrays;
 
 public class MainTestArrayStorage {
-    static final ArrayStorage ARRAY_STORAGE = new ArrayStorage();
+    private static final Storage ARRAY_STORAGE = new SortedArrayStorage();
 
     public static void main(String[] args) {
-        Client c1 = new Client();
+        final Client c1 = new Client();
         c1.setUuid("uuid1");
-        Client c2 = new Client();
+        final Client c2 = new Client();
         c2.setUuid("uuid2");
-        Client c3 = new Client();
-        c3.setUuid("uuid3");
-        Client c4 = new Client();
+        final Client c3 = new Client();
+        c3.setUuid("uuid4");
+        final Client c4 = new Client();
+        c4.setUuid("uuid3");
 
         ARRAY_STORAGE.save(c1);
         ARRAY_STORAGE.save(c2);
@@ -22,9 +26,11 @@ public class MainTestArrayStorage {
         ARRAY_STORAGE.update(c4);
 
         System.out.println("Get dummy: " + ARRAY_STORAGE.get("dummy"));
-
+        System.out.println("index of c2 =" + Arrays.binarySearch(ARRAY_STORAGE.getAll(), 0, ARRAY_STORAGE.size(), c2));
         printAll();
         ARRAY_STORAGE.delete(c1.getUuid());
+        printAll();
+        ARRAY_STORAGE.save(c4);
         printAll();
         ARRAY_STORAGE.clear();
         printAll();
