@@ -1,10 +1,19 @@
 package ru.a2ps.customersapp.model;
 
+import java.util.UUID;
+
 public class Client implements Comparable<Client> {
 
     // Unique identifier
-    private String uuid;
+    private final String uuid;
 
+    public Client() {
+        this(UUID.randomUUID().toString());
+    }
+
+    public Client(String uuid) {
+        this.uuid = uuid;
+    }
     @Override
     public String toString() {
         return uuid;
@@ -12,10 +21,6 @@ public class Client implements Comparable<Client> {
 
     public String getUuid() {
         return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
     }
 
     @Override

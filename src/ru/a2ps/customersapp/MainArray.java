@@ -1,3 +1,5 @@
+package ru.a2ps.customersapp;
+
 import ru.a2ps.customersapp.model.Client;
 import ru.a2ps.customersapp.storage.ArrayStorage;
 
@@ -34,8 +36,7 @@ public class MainArray {
                     System.out.println(ARRAY_STORAGE.size());
                     break;
                 case "save":
-                    c = new Client();
-                    c.setUuid(uuid);
+                    c = new Client(uuid);
                     ARRAY_STORAGE.save(c);
                     printAll();
                     break;

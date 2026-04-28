@@ -1,3 +1,5 @@
+package ru.a2ps.customersapp;
+
 import ru.a2ps.customersapp.model.Client;
 import ru.a2ps.customersapp.storage.SortedArrayStorage;
 import ru.a2ps.customersapp.storage.Storage;
@@ -8,14 +10,10 @@ public class MainTestArrayStorage {
     private static final Storage ARRAY_STORAGE = new SortedArrayStorage();
 
     public static void main(String[] args) {
-        final Client c1 = new Client();
-        c1.setUuid("uuid1");
-        final Client c2 = new Client();
-        c2.setUuid("uuid2");
-        final Client c3 = new Client();
-        c3.setUuid("uuid4");
-        final Client c4 = new Client();
-        c4.setUuid("uuid3");
+        final Client c1 = new Client("uuid1");
+        final Client c2 = new Client("uuid2");
+        final Client c3 = new Client("uuid4");
+        final Client c4 = new Client("uuid3");
 
         ARRAY_STORAGE.save(c1);
         ARRAY_STORAGE.save(c2);

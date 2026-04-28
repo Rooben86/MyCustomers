@@ -6,20 +6,22 @@ import java.util.Arrays;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
 
-    protected void doSave(Client c, int index) {
+    protected void insertElement(Client c, int index) {
         int insertionPoint = -index - 1;
         System.arraycopy(storage, insertionPoint, storage, insertionPoint + 1, size - insertionPoint);
         storage[insertionPoint] = c;
     }
 
-    protected void doDelete(int index) {
-        System.arraycopy(storage, index + 1, storage, index, size - index - 1);
+    protected void fillDeletedElement(int index) {
+        int numsMoved = size - index - 1;
+        if (numsMoved > 0) {
+            System.arraycopy(storage, index + 1, storage, index, numsMoved);
+        }
     }
 
     @Override
     protected int getIndex(String uuid) {
-        Client searchKey = new Client();
-        searchKey.setUuid(uuid);
+        Client searchKey = new Client(uuid);
         return Arrays.binarySearch(storage, 0, size, searchKey);
     }
 }

@@ -1,5 +1,8 @@
 package ru.a2ps.customersapp.storage;
 
+import ru.a2ps.customersapp.exception.ExiststorageException;
+import ru.a2ps.customersapp.exception.NotExiststorageException;
+import ru.a2ps.customersapp.exception.StorageException;
 import ru.a2ps.customersapp.model.Client;
 
 import java.util.Arrays;
@@ -17,7 +20,7 @@ public abstract class AbstractArrayStorage implements Storage {
     public void update(Client c) {
         int index = getIndex(c.getUuid());
         if (index < 0) {
-            System.out.println("client " + c.getUuid() + "doesn't exist");
+            throw new NotExiststorageException(c.getUuid());
         } else {
             storage[index] = c;
             System.out.println("Client " + c + " updated");
@@ -27,8 +30,7 @@ public abstract class AbstractArrayStorage implements Storage {
     public Client get(String uuid) {
         int index = getIndex(uuid);
         if (index < 0) {
-            System.out.println("client " + uuid + " doesn't exist");
-            return null;
+            throw new NotExiststorageException(uuid);
         }
         return storage[index];
     }
@@ -36,11 +38,11 @@ public abstract class AbstractArrayStorage implements Storage {
     public void save(Client c) {
         int index = getIndex(c.getUuid());
         if (index >= 0) {
-            System.out.println("client " + c.getUuid() + " already exists");
+            throw new ExiststorageException(c.getUuid());
         } else if (size == STORAGE_LIMIT) {
-            System.out.println("Storage overflow");
+            throw new StorageException("Storage overflow", c.getUuid());
         } else {
-            doSave(c, index);
+            insertElement(c, index);
             System.out.println("Client " + c + " saved");
             size++;
         }
@@ -49,9 +51,9 @@ public abstract class AbstractArrayStorage implements Storage {
     public void delete(String uuid) {
         int index = getIndex(uuid);
         if (index < 0) {
-            System.out.println("client " + uuid + " doesn't exist");
+            throw new NotExiststorageException(uuid);
         } else {
-            doDelete(index);
+            fillDeletedElement(index);
             storage[size - 1] = null;
             System.out.println("client " + uuid + " deleted");
             size--;
@@ -66,9 +68,9 @@ public abstract class AbstractArrayStorage implements Storage {
         return  size;
     }
 
-    protected abstract void doDelete(int index);
+    protected abstract void fillDeletedElement(int index);
 
-    protected abstract void doSave(Client c, int index);
+    protected abstract void insertElement(Client c, int index);
 
     protected abstract int getIndex(String uuid);
 }

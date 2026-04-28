@@ -4,11 +4,11 @@ import ru.a2ps.customersapp.model.Client;
 
 public class ArrayStorage extends AbstractArrayStorage {
 
-    protected void doSave(Client c, int index) {
+    protected void insertElement(Client c, int index) {
             storage[size] = c;
     }
 
-    protected void doDelete(int index) {
+    protected void fillDeletedElement(int index) {
         storage[index] = storage[size - 1];
     }
 
