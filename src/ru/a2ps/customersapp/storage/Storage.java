@@ -1,5 +1,8 @@
 package ru.a2ps.customersapp.storage;
+
 import ru.a2ps.customersapp.model.Client;
+
+import java.util.List;
 
 public interface Storage {
 
@@ -13,7 +16,7 @@ public interface Storage {
 
     void delete(String uuid);
 
-    Client[] getAll();
+    List<Client> getAllSorted();
 
     int size();
 }
